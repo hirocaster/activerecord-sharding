@@ -17,6 +17,12 @@ RSpec.configure do |config|
     ActiveRecordSharding::DatabaseTasks.drop_all_databases args
     ActiveRecordSharding::DatabaseTasks.create_all_databases args
     ActiveRecordSharding::DatabaseTasks.load_schema_all_databases args
+
+    create_sequencer_table_sql = "CREATE TABLE user_id (id BIGINT unsigned NOT NULL DEFAULT 0)"
+    ActiveRecord::Base.establish_connection(:test_user_sequencer).connection.execute create_sequencer_table_sql
+    insert_sequencer_table_sql = "INSERT INTO user_id VALUES (0)"
+    ActiveRecord::Base.establish_connection(:test_user_sequencer).connection.execute insert_sequencer_table_sql
+
     $stdout = back
   end
 
