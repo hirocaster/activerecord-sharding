@@ -19,3 +19,5 @@ module ActiveRecordSharding
     end
   end
 end
+
+require 'active_record_sharding/railtie' if defined? Rails
