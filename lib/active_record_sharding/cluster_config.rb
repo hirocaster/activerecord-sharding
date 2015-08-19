@@ -22,5 +22,9 @@ module ActiveRecordSharding
     def validate_config!
       raise "Nothing registerd connections." if registerd_connection_count == 0
     end
+
+    def connections
+      @connection_registry
+    end
   end
 end
