@@ -16,4 +16,7 @@ ActiveRecordSharding.configure do |config|
 end
 
 class User < ActiveRecord::Base
+  include ActiveRecordSharding::Model
+  use_sharding :user
+  define_sharding_key :id
 end

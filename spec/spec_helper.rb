@@ -20,6 +20,10 @@ RSpec.configure do |config|
     $stdout = back
   end
 
+  config.after(:each) do
+    User.all_shards.each &:delete_all
+  end
+
   config.after(:suite) do
     ActiveRecordSharding::DatabaseTasks.drop_all_databases cluster_name: 'user'
   end

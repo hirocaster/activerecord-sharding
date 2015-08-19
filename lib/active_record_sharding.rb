@@ -7,6 +7,7 @@ require "active_record_sharding/cluster_config"
 require "active_record_sharding/modulo_router"
 require "active_record_sharding/shard_repository"
 require "active_record_sharding/database_tasks"
+require "active_record_sharding/model"
 
 module ActiveRecordSharding
   class << self
