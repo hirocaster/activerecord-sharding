@@ -8,6 +8,7 @@ require "active_record_sharding/modulo_router"
 require "active_record_sharding/shard_repository"
 require "active_record_sharding/database_tasks"
 require "active_record_sharding/model"
+require "active_record_sharding/sequencer_repository"
 require "active_record_sharding/sequencer_config"
 
 module ActiveRecordSharding
