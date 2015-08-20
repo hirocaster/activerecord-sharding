@@ -60,6 +60,10 @@ module ActiveRecordSharding
       ActiveRecordSharding.config.sequencer_configs.values
     end
 
+    def fetch_sequencer_config(sequencer_name)
+      ActiveRecordSharding.config.fetch_sequencer_config sequencer_name
+    end
+
     def to_rake_task(task_name)
       Rake::Task[task_name]
     end
@@ -155,5 +159,42 @@ Missing cluster_name. Find cluster_name via `rake active_record_sharding:info` t
       end
     end
     extend TasksForSingleConnection
-  end
+
+    module TasksForSingleSequencerTask
+      def create_sequencer_database(args)
+        exec_task_for_sequencer_database 'create', args
+      end
+
+      def drop_sequencer_database(args)
+        exec_task_for_sequencer_database 'drop', args
+      end
+
+      private
+
+      def exec_task_for_sequencer_database(task_name, args)
+        sequencer_name = sequencer_name_or_error task_name, args
+        sequencer = sequencer_or_error sequencer_name
+        __send__ task_name, sequencer.connection_name.to_s
+      end
+
+      def sequencer_name_or_error(name, args)
+        unless sequencer_name = args[:sequencer_name]
+          $stderr.puts <<-MSG
+Missing sequencer_name. Find sequencer_name via `rake active_record_sharding:info`.
+          MSG
+          exit
+        end
+        sequencer_name
+      end
+
+      def sequencer_or_error(sequencer_name)
+        fetch_sequencer_config sequencer_name.to_sym
+      rescue KeyError
+        $stderr.puts %!sequencer name "#{sequencer_name}" not found.!
+        exit
+      end
+    end
+    extend TasksForSingleSequencerTask
+
+  end # module DatabaseTasks
 end

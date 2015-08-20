@@ -18,6 +18,9 @@ RSpec.configure do |config|
     ActiveRecordSharding::DatabaseTasks.create_all_databases args
     ActiveRecordSharding::DatabaseTasks.load_schema_all_databases args
 
+    sequencer_args = { sequencer_name: 'user' }
+    ActiveRecordSharding::DatabaseTasks.create_sequencer_database sequencer_args
+
     create_sequencer_table_sql = "CREATE TABLE user_id (id BIGINT unsigned NOT NULL DEFAULT 0)"
     ActiveRecordSharding::DatabaseTasks.execute('test_user_sequencer', create_sequencer_table_sql)
     insert_sequencer_table_sql = "INSERT INTO user_id VALUES (0)"
@@ -32,7 +35,9 @@ RSpec.configure do |config|
 
   config.after(:suite) do
     ActiveRecordSharding::DatabaseTasks.drop_all_databases cluster_name: 'user'
-    ActiveRecordSharding::DatabaseTasks.drop 'test_user_sequencer'
+
+    sequencer_args = { sequencer_name: 'user' }
+    ActiveRecordSharding::DatabaseTasks.drop_sequencer_database sequencer_args
   end
 
   config.order = :random
