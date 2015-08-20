@@ -1,10 +1,10 @@
-base = { 'adapter' => 'sqlite3' }
+base = { 'adapter' => 'mysql2', 'encoding' => 'utf8', 'pool' => 5, 'username' => 'root', 'password' => '', 'host' => 'localhost' }
 ActiveRecord::Base.configurations = {
-  'test_user_001' => base.merge('database' => 'user_001.sqlite3'),
-  'test_user_002' => base.merge('database' => 'user_002.sqlite3'),
-  'test_user_003' => base.merge('database' => 'user_003.sqlite3'),
-  'test_user_sequencer' => base.merge('database' => 'user_sequencer.sqlite3'),
-  'test' => base.merge('database' => 'default.sqlite3')
+  'test_user_001' => base.merge('database' => 'user_001'),
+  'test_user_002' => base.merge('database' => 'user_002'),
+  'test_user_003' => base.merge('database' => 'user_003'),
+  'test_user_sequencer' => base.merge('database' => 'user_sequencer'),
+  'test' => base.merge('database' => 'default')
 }
 ActiveRecord::Base.establish_connection(:test)
 

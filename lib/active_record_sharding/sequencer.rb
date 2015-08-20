@@ -19,25 +19,18 @@ module ActiveRecordSharding
       end
 
       def current_sequence_id
-        # for sqlite
         connection = sequencer_repository.fetch(sequencer_name).connection
-        res = connection.execute "SELECT id FROM #{sequencer_config.table_name}"
-        now_id = res.first.first.second.to_i
-        now_id
+        connection.execute "UPDATE `#{sequencer_config.table_name}` SET id = LAST_INSERT_ID(id)"
+        res = connection.execute 'SELECT LAST_INSERT_ID()'
+        new_id = res.first.first.to_i
+        new_id
       end
 
       def next_sequence_id
         connection = sequencer_repository.fetch(sequencer_name).connection
-
-        # for MySQL
-        # connection.execute "UPDATE #{quoted_table_name} SET id = LAST_INSERT_ID(id +1)"
-        # res = connection.execute("SELECT LAST_INSERT_ID()")
-        # new_id = res.first.first.to_i
-
-        # for sqlite
-        connection.execute "UPDATE #{sequencer_config.table_name} SET id=id+1"
-        res = connection.execute "SELECT id FROM #{sequencer_config.table_name}"
-        new_id = res.first.first.second.to_i
+        connection.execute "UPDATE `#{sequencer_config.table_name}` SET id = LAST_INSERT_ID(id +1)"
+        res = connection.execute 'SELECT LAST_INSERT_ID()'
+        new_id = res.first.first.to_i
         new_id
       end
     end
