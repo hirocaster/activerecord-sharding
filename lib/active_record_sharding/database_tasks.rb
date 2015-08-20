@@ -169,6 +169,22 @@ Missing cluster_name. Find cluster_name via `rake active_record_sharding:info` t
         exec_task_for_sequencer_database 'drop', args
       end
 
+      def create_table_sequencer_database(args)
+        sequencer_name = sequencer_name_or_error nil, args # TODO
+        sequencer = sequencer_or_error sequencer_name
+
+        create_table_sql = "CREATE TABLE #{sequencer.table_name} (id BIGINT unsigned NOT NULL DEFAULT 0)"
+        execute sequencer.connection_name.to_s, create_table_sql
+      end
+
+      def insert_initial_record_sequencer_database(args)
+        sequencer_name = sequencer_name_or_error nil, args # TODO
+        sequencer = sequencer_or_error sequencer_name
+
+        insert_initial_record_sql = "INSERT INTO #{sequencer.table_name} VALUES (0)"
+        execute sequencer.connection_name.to_s, insert_initial_record_sql
+      end
+
       private
 
       def exec_task_for_sequencer_database(task_name, args)

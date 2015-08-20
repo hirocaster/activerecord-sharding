@@ -20,11 +20,8 @@ RSpec.configure do |config|
 
     sequencer_args = { sequencer_name: 'user' }
     ActiveRecordSharding::DatabaseTasks.create_sequencer_database sequencer_args
-
-    create_sequencer_table_sql = "CREATE TABLE user_id (id BIGINT unsigned NOT NULL DEFAULT 0)"
-    ActiveRecordSharding::DatabaseTasks.execute('test_user_sequencer', create_sequencer_table_sql)
-    insert_sequencer_table_sql = "INSERT INTO user_id VALUES (0)"
-    ActiveRecordSharding::DatabaseTasks.execute('test_user_sequencer', insert_sequencer_table_sql)
+    ActiveRecordSharding::DatabaseTasks.create_table_sequencer_database sequencer_args
+    ActiveRecordSharding::DatabaseTasks.insert_initial_record_sequencer_database sequencer_args
 
     $stdout = back
   end
