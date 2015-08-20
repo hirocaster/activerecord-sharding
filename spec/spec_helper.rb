@@ -30,6 +30,8 @@ RSpec.configure do |config|
     ActiveRecordSharding::DatabaseTasks.insert_initial_record_sequencer_database sequencer_args
 
     $stdout = back
+
+    ActiveRecord::Base.establish_connection(:test)
   end
 
   config.after(:each) do
