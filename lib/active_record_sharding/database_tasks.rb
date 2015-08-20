@@ -119,6 +119,11 @@ Missing cluster_name. Find cluster_name via `rake active_record_sharding:info` t
         ActiveRecord::Tasks::DatabaseTasks.drop configuration
       end
 
+      def execute(connection_name, sql)
+        configuration = ActiveRecord::Base.configurations[connection_name]
+        ActiveRecord::Base.establish_connection(configuration).connection.execute sql
+      end
+
       def load_schema(connection_name)
         configuration = ActiveRecord::Base.configurations[connection_name]
 
