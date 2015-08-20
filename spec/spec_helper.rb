@@ -32,6 +32,7 @@ RSpec.configure do |config|
 
   config.after(:suite) do
     ActiveRecordSharding::DatabaseTasks.drop_all_databases cluster_name: 'user'
+    ActiveRecordSharding::DatabaseTasks.drop 'test_user_sequencer'
   end
 
   config.order = :random
