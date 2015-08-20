@@ -22,6 +22,11 @@ ActiveRecordSharding.configure do |config|
 end
 
 class User < ActiveRecord::Base
+  def items
+    return [] unless id
+    Item.shard_for(id).where(user_id: id).all
+  end
+
   include ActiveRecordSharding::Model
   use_sharding :user
   define_sharding_key :id
@@ -32,4 +37,15 @@ class User < ActiveRecord::Base
   before_put do |attributes|
     attributes[:id] = next_sequence_id unless attributes[:id]
   end
+end
+
+class Item < ActiveRecord::Base
+  def user
+    return unless user_id
+    User.shard_for(user_id).find_by user_id
+  end
+
+  include ActiveRecordSharding::Model
+  use_sharding :user
+  define_sharding_key :user_id
 end
