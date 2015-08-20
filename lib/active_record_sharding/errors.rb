@@ -2,6 +2,6 @@ module ActiveRecordSharding
   class Error < ::StandardError
   end
 
-  class MissingShardingKeyAttribute
+  class MissingShardingKeyAttribute < Error
   end
 end
