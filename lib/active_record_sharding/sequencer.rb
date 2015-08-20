@@ -1,7 +1,7 @@
 require 'active_support/concern'
 
 module ActiveRecordSharding
-  module IdSequencer
+  module Sequencer
     extend ActiveSupport::Concern
 
     included do

@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   use_sharding :user
   define_sharding_key :id
 
-  include ActiveRecordSharding::IdSequencer
+  include ActiveRecordSharding::Sequencer
   use_sequencer :user
 
   before_put do |attributes|
