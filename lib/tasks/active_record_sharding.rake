@@ -37,4 +37,26 @@ namespace :active_record_sharding do
   task :load_schema, %i(cluster_name) => %i(environment) do |_, args|
     ActiveRecordSharding::DatabaseTasks.load_schema_all_databases(args)
   end
+
+  namespace :sequencer do
+    desc 'Create database in specific sequencer'
+    task :create, %i(sequencer_name) => %i(environment) do |_, args|
+      ActiveRecordSharding::DatabaseTasks.create_sequencer_database(arg)
+    end
+
+    desc 'Drop database in specific sequencer'
+    task :drop, %i(sequencer_name) => %i(environment) do |_, args|
+      ActiveRecordSharding::DatabaseTasks.drop_sequencer_database(args)
+    end
+
+    desc 'Create sequencer table in specific sequencer database'
+    task :create_table, %i(sequencer_name) => %i(environment) do |_, args|
+      ActiveRecordSharding::DatabaseTasks.create_table_sequencer_database(args)
+    end
+
+    desc 'Insert initial record in specific sequencer database'
+    task :insert_initial_record, %i(sequencer_name) => %i(environment) do |_, args|
+      ActiveRecordSharding::DatabaseTasks.insert_initial_record_sequencer_database(args)
+    end
+  end
 end

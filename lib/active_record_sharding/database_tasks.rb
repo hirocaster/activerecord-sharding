@@ -170,7 +170,7 @@ Missing cluster_name. Find cluster_name via `rake active_record_sharding:info` t
       end
 
       def create_table_sequencer_database(args)
-        sequencer_name = sequencer_name_or_error nil, args # TODO
+        sequencer_name = sequencer_name_or_error 'create_table', args
         sequencer = sequencer_or_error sequencer_name
 
         create_table_sql = "CREATE TABLE #{sequencer.table_name} (id BIGINT unsigned NOT NULL DEFAULT 0)"
@@ -178,7 +178,7 @@ Missing cluster_name. Find cluster_name via `rake active_record_sharding:info` t
       end
 
       def insert_initial_record_sequencer_database(args)
-        sequencer_name = sequencer_name_or_error nil, args # TODO
+        sequencer_name = sequencer_name_or_error 'insert_initial_record', args
         sequencer = sequencer_or_error sequencer_name
 
         insert_initial_record_sql = "INSERT INTO #{sequencer.table_name} VALUES (0)"
@@ -196,7 +196,7 @@ Missing cluster_name. Find cluster_name via `rake active_record_sharding:info` t
       def sequencer_name_or_error(name, args)
         unless sequencer_name = args[:sequencer_name]
           $stderr.puts <<-MSG
-Missing sequencer_name. Find sequencer_name via `rake active_record_sharding:info`.
+Missing sequencer_name. Find sequencer_name via `rake active_record_sharding:info` then call `rake "active_record_sharding:sequencer#{name}[$sequencer_name]"`.
           MSG
           exit
         end
