@@ -27,14 +27,14 @@ module ActiveRecordSharding
       end
 
       def put!(attributes)
-        raise '`sharding_key` is not defined. Use `define_sharding_key`.' unless sharding_key
+        fail '`sharding_key` is not defined. Use `define_sharding_key`.' unless sharding_key
 
         @before_put_callback.call(attributes) if @before_put_callback
 
         if key = attributes[sharding_key] || attributes[sharding_key.to_s]
           shard_for(key).create!(attributes)
         else
-          raise ActiveRecordSharding::MissingShardingKeyAttribute
+          fail ActiveRecordSharding::MissingShardingKeyAttribute
         end
       end
 

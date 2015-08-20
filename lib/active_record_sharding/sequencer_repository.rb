@@ -18,21 +18,21 @@ module ActiveRecordSharding
       class_name = generate_class_name connection_name
 
       model = Class.new(base_class) do
-                self.table_name = base_class.table_name
+        self.table_name = base_class.table_name
 
-                module_eval <<-RUBY, __FILE__, __LINE__ + 1
+        module_eval <<-RUBY, __FILE__, __LINE__ + 1
                   def self.name
                     "#{base_class_name}::#{class_name}"
                   end
                 RUBY
-              end
+      end
 
       model.class_eval { establish_connection(connection_name) }
       model
     end
 
     def generate_class_name(connection_name)
-      "SequencerFor#{connection_name.to_s.gsub('-', '_').classify}"
+      "SequencerFor#{connection_name.to_s.tr('-', '_').classify}"
     end
   end
 end

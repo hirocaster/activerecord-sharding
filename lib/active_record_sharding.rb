@@ -1,16 +1,16 @@
-require "active_record"
+require 'active_record'
 
-require "active_record_sharding/version"
-require "active_record_sharding/errors"
-require "active_record_sharding/config"
-require "active_record_sharding/cluster_config"
-require "active_record_sharding/modulo_router"
-require "active_record_sharding/shard_repository"
-require "active_record_sharding/database_tasks"
-require "active_record_sharding/model"
-require "active_record_sharding/sequencer"
-require "active_record_sharding/sequencer_repository"
-require "active_record_sharding/sequencer_config"
+require 'active_record_sharding/version'
+require 'active_record_sharding/errors'
+require 'active_record_sharding/config'
+require 'active_record_sharding/cluster_config'
+require 'active_record_sharding/modulo_router'
+require 'active_record_sharding/shard_repository'
+require 'active_record_sharding/database_tasks'
+require 'active_record_sharding/model'
+require 'active_record_sharding/sequencer'
+require 'active_record_sharding/sequencer_repository'
+require 'active_record_sharding/sequencer_config'
 
 module ActiveRecordSharding
   class << self

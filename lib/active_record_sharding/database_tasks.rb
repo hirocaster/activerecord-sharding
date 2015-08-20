@@ -3,7 +3,7 @@ module ActiveRecordSharding
     extend self
 
     def info
-      puts "All clusters registered to active_record_sharding"
+      puts 'All clusters registered to active_record_sharding'
       puts
       clusters.each do |cluster|
         puts "= Cluster: #{cluster.name} ="
@@ -12,15 +12,18 @@ module ActiveRecordSharding
         end
         puts
       end
+      puts_sequencers
+    end
 
-      if sequencers
-        puts "All sequencers registered to active_record_sharding"
+    def puts_sequencers
+      return unless sequencers
+
+      puts 'All sequencers registered to active_record_sharding'
+      puts
+      sequencers.each do |sequencer|
+        puts "= Sequencer: #{sequencer.name} ="
+        puts "- Connection:#{sequencer.connection_name} Table:#{sequencer.table_name}"
         puts
-        sequencers.each do |sequencer|
-          puts "= Sequencer: #{sequencer.name} ="
-          puts "- Connection:#{sequencer.connection_name} Table:#{sequencer.table_name}"
-          puts
-        end
       end
     end
 
@@ -119,7 +122,7 @@ Missing cluster_name. Find cluster_name via `rake active_record_sharding:info` t
       def cluster_or_error(cluster_name)
         fetch_cluster_config cluster_name.to_sym
       rescue KeyError
-        $stderr.puts %!cluster name "#{cluster_name}" not found.!
+        $stderr.puts %(cluster name "#{cluster_name}" not found.)
         exit
       end
     end
@@ -154,7 +157,7 @@ Missing cluster_name. Find cluster_name via `rake active_record_sharding:info` t
           ActiveRecord::Base.establish_connection configuration
           ActiveRecord::Tasks::DatabaseTasks.load_schema :ruby
         else
-          raise "This version of ActiveRecord is not supported: v#{ActiveRecord::VERSION::STRING}"
+          fail "This version of ActiveRecord is not supported: v#{ActiveRecord::VERSION::STRING}"
         end
       end
     end
@@ -206,11 +209,10 @@ Missing sequencer_name. Find sequencer_name via `rake active_record_sharding:inf
       def sequencer_or_error(sequencer_name)
         fetch_sequencer_config sequencer_name.to_sym
       rescue KeyError
-        $stderr.puts %!sequencer name "#{sequencer_name}" not found.!
+        $stderr.puts %(sequencer name "#{sequencer_name}" not found.)
         exit
       end
     end
     extend TasksForSingleSequencerTask
-
   end # module DatabaseTasks
 end

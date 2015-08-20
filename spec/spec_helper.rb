@@ -33,7 +33,7 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    User.all_shards.each &:delete_all
+    User.all_shards.each(&:delete_all)
   end
 
   config.after(:suite) do

@@ -9,8 +9,8 @@ describe ActiveRecordSharding::Model do
         @sequence_id ||= 0
       end
 
-      def self.sequence_id=(value)
-        @sequence_id = value
+      class << self
+        attr_writer :sequence_id
       end
 
       def self.next_sequence_id
@@ -27,7 +27,7 @@ describe ActiveRecordSharding::Model do
 
       define_parent_methods do
         def find_from_all_by_name(name)
-          all_shards.map {|m| m.find_by(name: name) }.compact.first
+          all_shards.map { |m| m.find_by(name: name) }.compact.first
         end
       end
     end
@@ -39,7 +39,7 @@ describe ActiveRecordSharding::Model do
     it 'example' do
       expect(alice.persisted?).to be true
       expect(alice.name).to eq 'Alice'
-      expect(alice.class.name).to match %r{User::ShardFor}
+      expect(alice.class.name).to match(/User::ShardFor/)
     end
 
     context 'next call #put!' do

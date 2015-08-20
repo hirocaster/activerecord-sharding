@@ -1,0 +1,33 @@
+AllCops:
+  Exclude:
+    - "vendor/**/*"
+  DisplayCopNames: true
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedStyle: ruby19_no_mixed_keys
+  Exclude:
+    - "**/*.rake"
+    - "Rakefile"
+
+Metrics/LineLength:
+  Max: 160
+  Exclude:
+    - "db/migrate/*.rb"
+
+Lint/AssignmentInCondition:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 12

@@ -17,7 +17,7 @@ ActiveRecordSharding.configure do |config|
 
   config.define_sequencer(:user) do |sequencer|
     sequencer.register_connection(:test_user_sequencer)
-    sequencer.register_table_name("user_id")
+    sequencer.register_table_name('user_id')
   end
 end
 

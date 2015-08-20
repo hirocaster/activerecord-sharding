@@ -14,20 +14,20 @@ module ActiveRecordSharding
       def use_sequencer(name)
         self.sequencer_name = name
         self.sequencer_config = ActiveRecordSharding.config.fetch_sequencer_config name
-        self.sequencer_repository = ActiveRecordSharding::SequencerRepository.new self.sequencer_config, self
+        self.sequencer_repository = ActiveRecordSharding::SequencerRepository.new sequencer_config, self
         self.abstract_class = true
       end
 
       def current_sequence_id
         # for sqlite
-        connection = self.sequencer_repository.fetch(self.sequencer_name).connection
-        res = connection.execute "SELECT id FROM #{self.sequencer_config.table_name.to_s}"
+        connection = sequencer_repository.fetch(sequencer_name).connection
+        res = connection.execute "SELECT id FROM #{sequencer_config.table_name}"
         now_id = res.first.first.second.to_i
         now_id
       end
 
       def next_sequence_id
-        connection = self.sequencer_repository.fetch(self.sequencer_name).connection
+        connection = sequencer_repository.fetch(sequencer_name).connection
 
         # for MySQL
         # connection.execute "UPDATE #{quoted_table_name} SET id = LAST_INSERT_ID(id +1)"
@@ -35,8 +35,8 @@ module ActiveRecordSharding
         # new_id = res.first.first.to_i
 
         # for sqlite
-        connection.execute "UPDATE #{self.sequencer_config.table_name.to_s} SET id=id+1"
-        res = connection.execute "SELECT id FROM #{self.sequencer_config.table_name.to_s}"
+        connection.execute "UPDATE #{sequencer_config.table_name} SET id=id+1"
+        res = connection.execute "SELECT id FROM #{sequencer_config.table_name}"
         new_id = res.first.first.second.to_i
         new_id
       end
