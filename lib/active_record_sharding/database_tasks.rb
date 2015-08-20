@@ -12,6 +12,16 @@ module ActiveRecordSharding
         end
         puts
       end
+
+      if sequencers
+        puts "All sequencers registered to active_record_sharding"
+        puts
+        sequencers.each do |sequencer|
+          puts "= Sequencer: #{sequencer.name} ="
+          puts "- Connection:#{sequencer.connection_name} Table:#{sequencer.table_name}"
+          puts
+        end
+      end
     end
 
     def ar5?
@@ -44,6 +54,10 @@ module ActiveRecordSharding
 
     def fetch_cluster_config(cluster_name)
       ActiveRecordSharding.config.fetch_cluster_config cluster_name
+    end
+
+    def sequencers
+      ActiveRecordSharding.config.sequencer_configs.values
     end
 
     def to_rake_task(task_name)
