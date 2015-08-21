@@ -176,7 +176,7 @@ Missing cluster_name. Find cluster_name via `rake active_record_sharding:info` t
         sequencer_name = sequencer_name_or_error 'create_table', args
         sequencer = sequencer_or_error sequencer_name
 
-        create_table_sql = "CREATE TABLE #{sequencer.table_name} (id BIGINT unsigned NOT NULL DEFAULT 0)"
+        create_table_sql = "CREATE TABLE #{sequencer.table_name} (id BIGINT unsigned NOT NULL DEFAULT 0) ENGINE=MyISAM"
         execute sequencer.connection_name.to_s, create_table_sql
       end
 
