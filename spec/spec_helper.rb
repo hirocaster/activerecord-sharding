@@ -25,6 +25,7 @@ RSpec.configure do |config|
     ActiveRecordSharding::DatabaseTasks.load_schema_all_databases args
 
     sequencer_args = { sequencer_name: 'user' }
+    ActiveRecordSharding::DatabaseTasks.drop_sequencer_database sequencer_args
     ActiveRecordSharding::DatabaseTasks.create_sequencer_database sequencer_args
     ActiveRecordSharding::DatabaseTasks.create_table_sequencer_database sequencer_args
     ActiveRecordSharding::DatabaseTasks.insert_initial_record_sequencer_database sequencer_args
