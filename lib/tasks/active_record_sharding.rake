@@ -40,8 +40,8 @@ namespace :active_record_sharding do
 
   namespace :sequencer do
     desc 'Create database in specific sequencer'
-    task :create, %i(sequencer_name) => %i(environment) do |_, _args|
-      ActiveRecordSharding::DatabaseTasks.create_sequencer_database(arg)
+    task :create, %i(sequencer_name) => %i(environment) do |_, args|
+      ActiveRecordSharding::DatabaseTasks.create_sequencer_database(args)
     end
 
     desc 'Drop database in specific sequencer'
