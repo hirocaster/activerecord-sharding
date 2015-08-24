@@ -1,11 +1,11 @@
-describe ActiveRecordSharding::Model do
+describe ActiveRecord::Sharding::Model do
   let!(:model) do
     Class.new(ActiveRecord::Base) do
       def self.name
         'User'
       end
 
-      include ActiveRecordSharding::Sequencer
+      include ActiveRecord::Sharding::Sequencer
       use_sequencer :user
     end
   end

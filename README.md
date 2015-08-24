@@ -1,4 +1,4 @@
-# ActiveRecordSharding
+# ActiveRecord::Sharding
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/active_record_sharding`. To experiment with that code, run `bin/console` for an interactive prompt.
 
@@ -8,9 +8,7 @@ TODO: Delete this and the text above, and describe your gem
 
 Add this line to your application's Gemfile:
 
-```ruby
-gem 'active_record_sharding'
-```
+    gem 'activerecord-sharding'
 
 And then execute:
 
@@ -18,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install active_record_sharding
+    $ gem install activerecord-sharding
 
 ## Usage
 
@@ -57,7 +55,7 @@ user_003:
 Add this example  your application's config/initializers/active_record_sharding.rb:
 
 ```ruby
-ActiveRecordSharding.configure do |config|
+ActiveRecord::Sharding.configure do |config|
   config.define_sequencer(:user) do |sequencer|
     sequencer.register_connection(:user_sequencer)
     sequencer.register_table_name('user_id')
@@ -80,11 +78,11 @@ app/model/user.rb
 
 ```ruby
 class User < ActiveRecord::Base
-  include ActiveRecordSharding::Model
+  include ActiveRecord::Sharding::Model
   use_sharding :user
   define_sharding_key :id
 
-  include ActiveRecordSharding::Sequencer
+  include ActiveRecord::Sharding::Sequencer
   use_sequencer :user
 
   before_put do |attributes|
@@ -97,15 +95,15 @@ end
 ### Create sequencer dtabase
 
 ```ruby
-$ rake active_record_sharding:sequencer:create[user]
-$ rake active_record_sharding:sequencer:create_table[user]
-$ rake active_record_sharding:sequencer:insert_initial_record[user]
+$ rake active_record:sharding:sequencer:create[user]
+$ rake active_record:sharding:sequencer:create_table[user]
+$ rake active_record:sharding:sequencer:insert_initial_record[user]
 ```
 
 ### Create cluster dtabases
 
 ```ruby
-$ rake active_record_sharding:create_all
+$ rake active_record:sharding:create_all
 ```
 
 and, migrations all cluster databases.
@@ -147,7 +145,7 @@ Bad sample
 class User < ActiveRecord::Base
   has_many :items # connect to not sharding databases(default database)
 
-  include ActiveRecordSharding::Model
+  include ActiveRecord::Sharding::Model
   use_sharding :user
   define_sharding_key :id
   # (snip)
@@ -163,7 +161,7 @@ class User < ActiveRecord::Base
     Item.shard_for(id).where(user_id: id).all
   end
 
-  include ActiveRecordSharding::Model
+  include ActiveRecord::Sharding::Model
   use_sharding :user
   define_sharding_key :id
   # (snip)

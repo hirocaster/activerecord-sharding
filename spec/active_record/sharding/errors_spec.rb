@@ -1,4 +1,4 @@
-describe ActiveRecordSharding::Error do
+describe ActiveRecord::Sharding::Error do
   it 'is defined class' do
     expect(described_class).to be_a Class
   end

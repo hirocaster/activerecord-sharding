@@ -1,6 +1,6 @@
-describe ActiveRecordSharding::ModuloRouter do
+describe ActiveRecord::Sharding::ModuloRouter do
   let(:cluster_config) do
-    cluster_config = ActiveRecordSharding::ClusterConfig.new :user
+    cluster_config = ActiveRecord::Sharding::ClusterConfig.new :user
     cluster_config.register_connection :db_connection_001
     cluster_config.register_connection :db_connection_002
     cluster_config.register_connection :db_connection_003

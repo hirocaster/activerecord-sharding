@@ -5,7 +5,7 @@ SimpleCov.start do
 end
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'active_record_sharding'
+require 'activerecord-sharding'
 require 'pry'
 require 'pry-byebug'
 require 'awesome_print'
@@ -24,15 +24,15 @@ RSpec.configure do |config|
 
     back, $stdout = $stdout, StringIO.new
     args = { cluster_name: 'user' }
-    ActiveRecordSharding::DatabaseTasks.drop_all_databases args
-    ActiveRecordSharding::DatabaseTasks.create_all_databases args
-    ActiveRecordSharding::DatabaseTasks.load_schema_all_databases args
+    ActiveRecord::Sharding::DatabaseTasks.drop_all_databases args
+    ActiveRecord::Sharding::DatabaseTasks.create_all_databases args
+    ActiveRecord::Sharding::DatabaseTasks.load_schema_all_databases args
 
     sequencer_args = { sequencer_name: 'user' }
-    ActiveRecordSharding::DatabaseTasks.drop_sequencer_database sequencer_args
-    ActiveRecordSharding::DatabaseTasks.create_sequencer_database sequencer_args
-    ActiveRecordSharding::DatabaseTasks.create_table_sequencer_database sequencer_args
-    ActiveRecordSharding::DatabaseTasks.insert_initial_record_sequencer_database sequencer_args
+    ActiveRecord::Sharding::DatabaseTasks.drop_sequencer_database sequencer_args
+    ActiveRecord::Sharding::DatabaseTasks.create_sequencer_database sequencer_args
+    ActiveRecord::Sharding::DatabaseTasks.create_table_sequencer_database sequencer_args
+    ActiveRecord::Sharding::DatabaseTasks.insert_initial_record_sequencer_database sequencer_args
 
     $stdout = back
 
@@ -44,10 +44,10 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    ActiveRecordSharding::DatabaseTasks.drop_all_databases cluster_name: 'user'
+    ActiveRecord::Sharding::DatabaseTasks.drop_all_databases cluster_name: 'user'
 
     sequencer_args = { sequencer_name: 'user' }
-    ActiveRecordSharding::DatabaseTasks.drop_sequencer_database sequencer_args
+    ActiveRecord::Sharding::DatabaseTasks.drop_sequencer_database sequencer_args
   end
 
   config.order = :random
