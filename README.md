@@ -133,6 +133,43 @@ User.shard_for(sharding_key).where(name: 'foorbar')
 
 `#sahrd_for` is returns User class.
 
+#### Association/Relation
+
+if use database association/relation in sharding databases.
+
+Please, don't use ActiveRecord standard associations/relation features(has_may, has_one, belongs_to... etc).because, it using `ActiveRecord::Base.connection`(not sharding databases conneciton).
+
+Please, manually add association/relation methods.
+
+Bad sample
+
+```
+class User < ActiveRecord::Base
+  has_many :items # connect to not sharding databases(default database)
+
+  include ActiveRecordSharding::Model
+  use_sharding :user
+  define_sharding_key :id
+  # (snip)
+end
+```
+
+Manually add method
+
+```
+class User < ActiveRecord::Base
+  def items
+    return [] unless id
+    Item.shard_for(id).where(user_id: id).all
+  end
+
+  include ActiveRecordSharding::Model
+  use_sharding :user
+  define_sharding_key :id
+  # (snip)
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
