@@ -12,6 +12,10 @@ require 'awesome_print'
 
 require_relative 'models'
 
+log_directry = File.expand_path('../../log/', __FILE__)
+Dir.mkdir log_directry unless Dir.exists? log_directry
+ActiveRecord::Base.logger = Logger.new("#{log_directry}/test.log")
+
 RSpec.configure do |config|
   config.before(:suite) do
     ActiveRecord::Tasks::DatabaseTasks.db_dir = File.expand_path '..', __FILE__
