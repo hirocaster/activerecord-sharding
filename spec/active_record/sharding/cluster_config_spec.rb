@@ -1,4 +1,4 @@
-describe ActiveRecordSharding::ClusterConfig do
+describe ActiveRecord::Sharding::ClusterConfig do
   let(:config) { described_class.new(:user) }
 
   it 'returns cluster config name' do

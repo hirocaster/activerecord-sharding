@@ -1,4 +1,4 @@
-describe ActiveRecordSharding::Model do
+describe ActiveRecord::Sharding::Model do
   let!(:model) do
     Class.new(ActiveRecord::Base) do
       def self.name
@@ -17,7 +17,7 @@ describe ActiveRecordSharding::Model do
         self.sequence_id += 1
       end
 
-      include ActiveRecordSharding::Model
+      include ActiveRecord::Sharding::Model
       use_sharding :user
       define_sharding_key :id
 
@@ -57,10 +57,10 @@ describe ActiveRecordSharding::Model do
         allow(User).to receive(:sharding_key).and_return(:dammy_sharding_key)
       end
 
-      it 'raise ActiveRecordSharding::MissingShardingKeyAttribute' do
+      it 'raise ActiveRecord::Sharding::MissingShardingKeyAttribute' do
         expect do
           User.put! name: 'foobar'
-        end.to raise_error ActiveRecordSharding::MissingShardingKeyAttribute
+        end.to raise_error ActiveRecord::Sharding::MissingShardingKeyAttribute
       end
     end
   end

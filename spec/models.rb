@@ -8,7 +8,7 @@ ActiveRecord::Base.configurations = {
 }
 ActiveRecord::Base.establish_connection(:test)
 
-ActiveRecordSharding.configure do |config|
+ActiveRecord::Sharding.configure do |config|
   config.define_cluster(:user) do |cluster|
     cluster.register_connection(:test_user_001)
     cluster.register_connection(:test_user_002)
@@ -27,11 +27,11 @@ class User < ActiveRecord::Base
     Item.shard_for(id).where(user_id: id).all
   end
 
-  include ActiveRecordSharding::Model
+  include ActiveRecord::Sharding::Model
   use_sharding :user
   define_sharding_key :id
 
-  include ActiveRecordSharding::Sequencer
+  include ActiveRecord::Sharding::Sequencer
   use_sequencer :user
 
   before_put do |attributes|
@@ -45,7 +45,7 @@ class Item < ActiveRecord::Base
     User.shard_for(user_id).find_by user_id
   end
 
-  include ActiveRecordSharding::Model
+  include ActiveRecord::Sharding::Model
   use_sharding :user
   define_sharding_key :user_id
 end

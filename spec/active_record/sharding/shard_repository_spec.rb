@@ -1,5 +1,5 @@
-describe ActiveRecordSharding::ShardRepository do
-  let(:cluster_config) { ActiveRecordSharding.config.fetch_cluster_config(:user) }
+describe ActiveRecord::Sharding::ShardRepository do
+  let(:cluster_config) { ActiveRecord::Sharding.config.fetch_cluster_config(:user) }
   let(:shard_repository) { described_class.new cluster_config, User }
 
   describe '#fetch' do

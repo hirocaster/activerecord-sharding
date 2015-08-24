@@ -1,15 +1,15 @@
-describe ActiveRecordSharding do
+describe ActiveRecord::Sharding do
   it 'has a version number' do
-    expect(ActiveRecordSharding::VERSION).not_to be nil
+    expect(ActiveRecord::Sharding::VERSION).not_to be nil
   end
 
   describe '.config' do
     it 'returns Config class' do
-      expect(ActiveRecordSharding.config).to be_a ActiveRecordSharding::Config
+      expect(ActiveRecord::Sharding.config).to be_a ActiveRecord::Sharding::Config
     end
 
     it 'returns equal instance, every call' do
-      expect(ActiveRecordSharding.config).to eq ActiveRecordSharding.config
+      expect(ActiveRecord::Sharding.config).to eq ActiveRecord::Sharding.config
     end
   end
 end
