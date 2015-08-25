@@ -95,15 +95,13 @@ end
 ### Create sequencer databases
 
 ```ruby
-$ rake active_record:sharding:sequencer:create[user]
-$ rake active_record:sharding:sequencer:create_table[user]
-$ rake active_record:sharding:sequencer:insert_initial_record[user]
+$ rake active_record:sharding:sequencer:setup
 ```
 
 ### Create cluster dtabases
 
 ```ruby
-$ rake active_record:sharding:create_all
+$ rake active_record:sharding:setup
 ```
 
 and, migrations all cluster databases.

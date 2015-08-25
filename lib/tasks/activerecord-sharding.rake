@@ -59,6 +59,30 @@ namespace :active_record do
       task :insert_initial_record, %i(sequencer_name) => %i(environment) do |_, args|
         ActiveRecord::Sharding::DatabaseTasks.insert_initial_record_sequencer_database(args)
       end
+
+      desc 'Setup all databases in sequencers'
+      task setup: %i(create_all create_table_all insert_initial_record_all) do
+      end
+
+      desc 'Create all databases in all sequencers'
+      task :create_all => :environment do
+        ActiveRecord::Sharding::DatabaseTasks.invoke_task_for_all_sequencers('create')
+      end
+
+      desc 'Create table in all sequencers databases'
+      task :create_table_all => :environment do
+        ActiveRecord::Sharding::DatabaseTasks.invoke_task_for_all_sequencers('create_table')
+      end
+
+      desc 'Insert inital record in all sequencers tables'
+      task :insert_initial_record_all => :environment do
+        ActiveRecord::Sharding::DatabaseTasks.invoke_task_for_all_sequencers('insert_initial_record')
+      end
+
+      desc 'Drop all databases in all sequencers'
+      task :drop_all => :environment do
+        ActiveRecord::Sharding::DatabaseTasks.invoke_task_for_all_sequencers('drop')
+      end
     end
   end
 end

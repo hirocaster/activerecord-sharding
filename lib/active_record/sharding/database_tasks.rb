@@ -56,6 +56,10 @@ module ActiveRecord
         ActiveRecord::Sharding.config.cluster_configs.keys
       end
 
+      def sequencer_names
+        ActiveRecord::Sharding.config.sequencer_configs.keys
+      end
+
       def fetch_cluster_config(cluster_name)
         ActiveRecord::Sharding.config.fetch_cluster_config cluster_name
       end
@@ -82,6 +86,18 @@ module ActiveRecord
         def invoke_task(name, cluster_name)
           task_name = "active_record:sharding:#{name}"
           to_rake_task(task_name).invoke cluster_name.to_s
+          to_rake_task(task_name).reenable
+        end
+
+        def invoke_task_for_all_sequencers(task_name)
+          sequencer_names.each do |sequencer_name|
+            invoke_task_for_sequencer task_name, sequencer_name
+          end
+        end
+
+        def invoke_task_for_sequencer(name, sequencer_name)
+          task_name = "active_record:sharding:sequencer:#{name}"
+          to_rake_task(task_name).invoke sequencer_name.to_s
           to_rake_task(task_name).reenable
         end
       end
