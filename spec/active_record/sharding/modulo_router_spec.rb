@@ -10,7 +10,7 @@ describe ActiveRecord::Sharding::ModuloRouter do
   let(:router) { described_class.new cluster_config }
 
   describe '#route' do
-    it 'returns database connection name by id % cluster nodes' do
+    it "returns database connection name by id % cluster nodes" do
       expect(router.route(1)).to eq :db_connection_002
       expect(router.route(2)).to eq :db_connection_003
       expect(router.route(3)).to eq :db_connection_001

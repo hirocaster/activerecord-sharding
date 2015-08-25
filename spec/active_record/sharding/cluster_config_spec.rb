@@ -1,7 +1,7 @@
 describe ActiveRecord::Sharding::ClusterConfig do
   let(:config) { described_class.new(:user) }
 
-  it 'returns cluster config name' do
+  it "returns cluster config name" do
     expect(config.name).to eq :user
   end
 
@@ -17,13 +17,13 @@ describe ActiveRecord::Sharding::ClusterConfig do
     end
 
     describe '#registerd_connection_count' do
-      it 'returns registerd total connection count' do
+      it "returns registerd total connection count" do
         expect(config.registerd_connection_count).to eq 3
       end
     end
 
     describe '#fetch' do
-      it 'returns database connection name by modulo number' do
+      it "returns database connection name by modulo number" do
         expect(config.fetch 0).to eq :db_connection_001
         expect(config.fetch 1).to eq :db_connection_002
         expect(config.fetch 2).to eq :db_connection_003
@@ -32,9 +32,9 @@ describe ActiveRecord::Sharding::ClusterConfig do
   end
 
   describe '#validate_config!' do
-    context 'Nothing register connection' do
-      it 'returns raise' do
-        expect { config.validate_config! }.to raise_error 'Nothing registerd connections.'
+    context "Nothing register connection" do
+      it "returns raise" do
+        expect { config.validate_config! }.to raise_error "Nothing registerd connections."
       end
     end
   end

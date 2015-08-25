@@ -1,4 +1,4 @@
-require 'active_support/concern'
+require "active_support/concern"
 
 module ActiveRecord
   module Sharding
@@ -22,7 +22,7 @@ module ActiveRecord
         def current_sequence_id
           connection = sequencer_repository.fetch(sequencer_name).connection
           connection.execute "UPDATE `#{sequencer_config.table_name}` SET id = LAST_INSERT_ID(id)"
-          res = connection.execute 'SELECT LAST_INSERT_ID()'
+          res = connection.execute "SELECT LAST_INSERT_ID()"
           new_id = res.first.first.to_i
           new_id
         end
@@ -30,7 +30,7 @@ module ActiveRecord
         def next_sequence_id
           connection = sequencer_repository.fetch(sequencer_name).connection
           connection.execute "UPDATE `#{sequencer_config.table_name}` SET id = LAST_INSERT_ID(id +1)"
-          res = connection.execute 'SELECT LAST_INSERT_ID()'
+          res = connection.execute "SELECT LAST_INSERT_ID()"
           new_id = res.first.first.to_i
           new_id
         end

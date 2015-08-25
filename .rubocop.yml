@@ -12,6 +12,9 @@ Style/BracesAroundHashParameters:
 Style/Documentation:
   Enabled: false
 
+Style/ExtraSpacing:
+  Enabled: false
+
 Style/GuardClause:
   MinBodyLength: 5
 
@@ -20,6 +23,9 @@ Style/MethodDefParentheses:
 
 Style/ModuleFunction:
   Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
 
 Style/HashSyntax:
   EnforcedStyle: ruby19_no_mixed_keys

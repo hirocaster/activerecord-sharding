@@ -2,7 +2,7 @@ describe ActiveRecord::Sharding::Model do
   let!(:model) do
     Class.new(ActiveRecord::Base) do
       def self.name
-        'User'
+        "User"
       end
 
       def self.sequence_id
@@ -33,58 +33,58 @@ describe ActiveRecord::Sharding::Model do
     end
   end
 
-  let(:alice) { model.put! name: 'Alice' }
+  let(:alice) { model.put! name: "Alice" }
 
-  describe '.put!' do
-    it 'example' do
+  describe ".put!" do
+    it "example" do
       expect(alice.persisted?).to be true
-      expect(alice.name).to eq 'Alice'
+      expect(alice.name).to eq "Alice"
       expect(alice.class.name).to match(/User::ShardFor/)
     end
 
     context 'next call #put!' do
-      let(:bob) { model.put! name: 'Bob' }
+      let(:bob) { model.put! name: "Bob" }
       let(:alice_connect_db) { alice.class.connection.pool.spec.config[:database] }
       let(:bob_connect_db) { bob.class.connection.pool.spec.config[:database] }
 
-      it 'different connection database' do
+      it "different connection database" do
         expect(alice_connect_db).not_to eq bob_connect_db
       end
     end
 
-    context 'Not included sharding key in args' do
+    context "Not included sharding key in args" do
       before do
         allow(User).to receive(:sharding_key).and_return(:dammy_sharding_key)
       end
 
-      it 'raise ActiveRecord::Sharding::MissingShardingKeyAttribute' do
+      it "raise ActiveRecord::Sharding::MissingShardingKeyAttribute" do
         expect do
-          User.put! name: 'foobar'
+          User.put! name: "foobar"
         end.to raise_error ActiveRecord::Sharding::MissingShardingKeyAttribute
       end
     end
   end
 
-  describe '.shard_for' do
+  describe ".shard_for" do
     before { alice }
 
-    it 'example' do
-      user_record = model.shard_for(alice.id).find_by name: 'Alice'
+    it "example" do
+      user_record = model.shard_for(alice.id).find_by name: "Alice"
       expect(user_record).not_to be nil
-      expect(user_record.name).to eq 'Alice'
+      expect(user_record.name).to eq "Alice"
     end
   end
 
-  describe '.define_parent_methods' do
+  describe ".define_parent_methods" do
     before do
-      model.put! name: 'foo'
-      model.put! name: 'bar'
+      model.put! name: "foo"
+      model.put! name: "bar"
     end
 
-    it 'enables to define class methods to parent class' do
-      record = model.find_from_all_by_name('foo')
+    it "enables to define class methods to parent class" do
+      record = model.find_from_all_by_name("foo")
       expect(record).not_to be_nil
-      expect(record.name).to eq('foo')
+      expect(record.name).to eq("foo")
     end
   end
 end

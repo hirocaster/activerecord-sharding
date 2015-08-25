@@ -1,16 +1,16 @@
-require 'active_record'
+require "active_record"
 
-require 'active_record/sharding/version'
-require 'active_record/sharding/errors'
-require 'active_record/sharding/config'
-require 'active_record/sharding/cluster_config'
-require 'active_record/sharding/modulo_router'
-require 'active_record/sharding/shard_repository'
-require 'active_record/sharding/database_tasks'
-require 'active_record/sharding/model'
-require 'active_record/sharding/sequencer'
-require 'active_record/sharding/sequencer_repository'
-require 'active_record/sharding/sequencer_config'
+require "active_record/sharding/version"
+require "active_record/sharding/errors"
+require "active_record/sharding/config"
+require "active_record/sharding/cluster_config"
+require "active_record/sharding/modulo_router"
+require "active_record/sharding/shard_repository"
+require "active_record/sharding/database_tasks"
+require "active_record/sharding/model"
+require "active_record/sharding/sequencer"
+require "active_record/sharding/sequencer_repository"
+require "active_record/sharding/sequencer_config"
 
 module ActiveRecord
   module Sharding
@@ -26,4 +26,4 @@ module ActiveRecord
   end
 end
 
-require 'active_record/sharding/railtie' if defined? Rails
+require "active_record/sharding/railtie" if defined? Rails

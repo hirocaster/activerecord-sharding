@@ -4,7 +4,7 @@ module ActiveRecord
       extend self
 
       def info
-        puts 'All clusters registered to activerecord-sharding'
+        puts "All clusters registered to activerecord-sharding"
         puts
         clusters.each do |cluster|
           puts "= Cluster: #{cluster.name} ="
@@ -19,7 +19,7 @@ module ActiveRecord
       def puts_sequencers
         return unless sequencers
 
-        puts 'All sequencers registered to activerecord-sharding'
+        puts "All sequencers registered to activerecord-sharding"
         puts
         sequencers.each do |sequencer|
           puts "= Sequencer: #{sequencer.name} ="
@@ -105,15 +105,15 @@ module ActiveRecord
 
       module TaskOrganizerForSingleClusterTask
         def create_all_databases(args)
-          exec_task_for_all_databases 'create', args
+          exec_task_for_all_databases "create", args
         end
 
         def drop_all_databases(args)
-          exec_task_for_all_databases 'drop', args
+          exec_task_for_all_databases "drop", args
         end
 
         def load_schema_all_databases(args)
-          exec_task_for_all_databases 'load_schema', args
+          exec_task_for_all_databases "load_schema", args
         end
 
         private
@@ -182,15 +182,15 @@ Missing cluster_name. Find cluster_name via `rake active_record:sharding:info` t
 
       module TasksForSingleSequencerTask
         def create_sequencer_database(args)
-          exec_task_for_sequencer_database 'create', args
+          exec_task_for_sequencer_database "create", args
         end
 
         def drop_sequencer_database(args)
-          exec_task_for_sequencer_database 'drop', args
+          exec_task_for_sequencer_database "drop", args
         end
 
         def create_table_sequencer_database(args)
-          sequencer_name = sequencer_name_or_error 'create_table', args
+          sequencer_name = sequencer_name_or_error "create_table", args
           sequencer = sequencer_or_error sequencer_name
 
           create_table_sql = "CREATE TABLE #{sequencer.table_name} (id BIGINT unsigned NOT NULL DEFAULT 0) ENGINE=MyISAM"
@@ -198,7 +198,7 @@ Missing cluster_name. Find cluster_name via `rake active_record:sharding:info` t
         end
 
         def insert_initial_record_sequencer_database(args)
-          sequencer_name = sequencer_name_or_error 'insert_initial_record', args
+          sequencer_name = sequencer_name_or_error "insert_initial_record", args
           sequencer = sequencer_or_error sequencer_name
 
           insert_initial_record_sql = "INSERT INTO #{sequencer.table_name} VALUES (0)"
