@@ -1,6 +1,6 @@
 # ActiveRecord::Sharding
 
-[![Build Status](https://travis-ci.org/hirocaster/activerecord-sharding.svg)](https://travis-ci.org/hirocaster/activerecord-sharding)
+[![Build Status](https://travis-ci.org/hirocaster/activerecord-sharding.svg)](https://travis-ci.org/hirocaster/activerecord-sharding) [![Coverage Status](https://coveralls.io/repos/hirocaster/activerecord-sharding/badge.svg?branch=coveralls&service=github)](https://coveralls.io/github/hirocaster/activerecord-sharding?branch=coveralls)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/active_record_sharding`. To experiment with that code, run `bin/console` for an interactive prompt.
 
