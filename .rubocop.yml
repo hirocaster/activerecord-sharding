@@ -12,6 +12,9 @@ Style/BracesAroundHashParameters:
 Style/Documentation:
   Enabled: false
 
+Style/ExtraSpacing:
+  Enabled: false
+
 Style/GuardClause:
   MinBodyLength: 5
 
