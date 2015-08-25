@@ -18,7 +18,7 @@ describe ActiveRecord::Sharding::Model do
       end
 
       include ActiveRecord::Sharding::Model
-      use_sharding :user
+      use_sharding :user, :modulo
       define_sharding_key :id
 
       before_put do |attrs|

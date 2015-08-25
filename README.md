@@ -79,7 +79,7 @@ app/model/user.rb
 ```ruby
 class User < ActiveRecord::Base
   include ActiveRecord::Sharding::Model
-  use_sharding :user
+  use_sharding :user, :modulo # shard name, algorithm
   define_sharding_key :id
 
   include ActiveRecord::Sharding::Sequencer
@@ -146,7 +146,7 @@ class User < ActiveRecord::Base
   has_many :items # connect to not sharding databases(default database)
 
   include ActiveRecord::Sharding::Model
-  use_sharding :user
+  use_sharding :user, :modulo
   define_sharding_key :id
   # (snip)
 end
@@ -162,7 +162,7 @@ class User < ActiveRecord::Base
   end
 
   include ActiveRecord::Sharding::Model
-  use_sharding :user
+  use_sharding :user, :modulo
   define_sharding_key :id
   # (snip)
 end

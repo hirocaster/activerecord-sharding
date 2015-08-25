@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   include ActiveRecord::Sharding::Model
-  use_sharding :user
+  use_sharding :user, :modulo
   define_sharding_key :id
 
   include ActiveRecord::Sharding::Sequencer
@@ -46,6 +46,6 @@ class Item < ActiveRecord::Base
   end
 
   include ActiveRecord::Sharding::Model
-  use_sharding :user
+  use_sharding :user, :modulo
   define_sharding_key :user_id
 end

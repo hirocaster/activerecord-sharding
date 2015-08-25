@@ -12,9 +12,11 @@ module ActiveRecord
       end
 
       module ClassMethods
-        def use_sharding(name)
+        def use_sharding(name, algorithm = :modulo)
           config = ActiveRecord::Sharding.config.fetch_cluster_config name
-          self.cluster_router = ActiveRecord::Sharding::ModuloRouter.new config
+          if algorithm == :modulo
+            self.cluster_router = ActiveRecord::Sharding::ModuloRouter.new config
+          end
           self.shard_repository = ActiveRecord::Sharding::ShardRepository.new config, self
           self.abstract_class = true
         end
