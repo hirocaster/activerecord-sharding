@@ -21,7 +21,7 @@ module ActiveRecord
       end
 
       def validate_config!
-        fail 'Nothing registerd connections.' if registerd_connection_count == 0
+        fail "Nothing registerd connections." if registerd_connection_count == 0
       end
 
       def connections

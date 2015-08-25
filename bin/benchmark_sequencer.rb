@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 
-require 'bundler/setup'
-require 'active_record_sharding'
+require "bundler/setup"
+require "active_record_sharding"
 
-require_relative '../spec/models'
+require_relative "../spec/models"
 
-require 'benchmark'
-require 'pry'
+require "benchmark"
+require "pry"
 
 GENERATE_ID_COUNT = 100_000
 
@@ -21,26 +21,26 @@ def before_benchmark
   ActiveRecord::Base.establish_connection(:test)
 
   unless User.current_sequence_id == 0
-    puts 'Fail: Start sequence id is not zero.'
+    puts "Fail: Start sequence id is not zero."
     exit
   end
 end
 
 def setup_database_env
-  ActiveRecord::Tasks::DatabaseTasks.db_dir = File.expand_path '../../spec', __FILE__
-  ActiveRecord::Tasks::DatabaseTasks.root   = File.expand_path '../..', __FILE__
-  ActiveRecord::Tasks::DatabaseTasks.env    = 'test'
+  ActiveRecord::Tasks::DatabaseTasks.db_dir = File.expand_path "../../spec", __FILE__
+  ActiveRecord::Tasks::DatabaseTasks.root   = File.expand_path "../..", __FILE__
+  ActiveRecord::Tasks::DatabaseTasks.env    = "test"
 end
 
 def setup_shard_cluster_databases
-  args = { cluster_name: 'user' }
+  args = { cluster_name: "user" }
   ActiveRecordSharding::DatabaseTasks.drop_all_databases args
   ActiveRecordSharding::DatabaseTasks.create_all_databases args
   ActiveRecordSharding::DatabaseTasks.load_schema_all_databases args
 end
 
 def setup_sequence_database
-  sequencer_args = { sequencer_name: 'user' }
+  sequencer_args = { sequencer_name: "user" }
   ActiveRecordSharding::DatabaseTasks.drop_sequencer_database sequencer_args
   ActiveRecordSharding::DatabaseTasks.create_sequencer_database sequencer_args
   ActiveRecordSharding::DatabaseTasks.create_table_sequencer_database sequencer_args
@@ -52,9 +52,9 @@ def after_benchmark
     puts "Fail: End sequence id is not #{GENERATE_ID_COUNT}."
   end
 
-  ActiveRecordSharding::DatabaseTasks.drop_all_databases cluster_name: 'user'
+  ActiveRecordSharding::DatabaseTasks.drop_all_databases cluster_name: "user"
 
-  sequencer_args = { sequencer_name: 'user' }
+  sequencer_args = { sequencer_name: "user" }
   ActiveRecordSharding::DatabaseTasks.drop_sequencer_database sequencer_args
 end
 

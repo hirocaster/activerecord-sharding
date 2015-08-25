@@ -1,4 +1,4 @@
-require 'active_support/concern'
+require "active_support/concern"
 
 module ActiveRecord
   module Sharding
@@ -30,7 +30,7 @@ module ActiveRecord
         end
 
         def put!(attributes)
-          fail '`sharding_key` is not defined. Use `define_sharding_key`.' unless sharding_key
+          fail "`sharding_key` is not defined. Use `define_sharding_key`." unless sharding_key
 
           @before_put_callback.call(attributes) if @before_put_callback
 

@@ -18,8 +18,8 @@ module ActiveRecord
       end
 
       def validate_config!
-        fail 'Nothing connection. Please call register_connection' if @connection_name.blank?
-        fail 'Nothing table_name. Please call register_table_name' if @table_name.blank?
+        fail "Nothing connection. Please call register_connection" if @connection_name.blank?
+        fail "Nothing table_name. Please call register_table_name" if @table_name.blank?
       end
     end
   end
