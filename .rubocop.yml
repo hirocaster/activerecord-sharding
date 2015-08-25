@@ -15,6 +15,9 @@ Style/Documentation:
 Style/GuardClause:
   MinBodyLength: 5
 
+Style/MethodDefParentheses:
+  EnforcedStyle: require_parentheses
+
 Style/ModuleFunction:
   Enabled: false
 
@@ -34,3 +37,8 @@ Lint/AssignmentInCondition:
 
 Metrics/MethodLength:
   Max: 12
+
+FileName:
+  Exclude:
+    - 'lib/activerecord-sharding.rb'
+    - 'spec/tasks/activerecord-sharding_spec.rb'
