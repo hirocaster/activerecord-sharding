@@ -92,7 +92,7 @@ end
 ```
 
 
-### Create sequencer dtabase
+### Create sequencer databases
 
 ```ruby
 $ rake active_record:sharding:sequencer:create[user]
