@@ -1,7 +1,6 @@
 module ActiveRecord
   module Sharding
     class AbstractRepository
-
       private
 
         def generate_model_for_shard(connection_name)
@@ -22,8 +21,8 @@ module ActiveRecord
           model
         end
 
-        def generate_class_name(connection_name)
-          raise NotImplementedError.new("#{self.class.name}.#{__method__} is an abstract method.")
+        def generate_class_name(connection_name) # rubocop:disable Lint/UnusedMethodArgument
+          fail NotImplementedError, "#{self.class.name}.#{__method__} is an abstract method."
         end
     end
   end
