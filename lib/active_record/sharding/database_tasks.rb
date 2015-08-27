@@ -190,17 +190,13 @@ Missing cluster_name. Find cluster_name via `rake active_record:sharding:info` t
         end
 
         def create_table_sequencer_database(args)
-          sequencer_name = sequencer_name_or_error "create_table", args
-          sequencer = sequencer_or_error sequencer_name
-
+          sequencer = sequencer_or_error "create_table", args
           create_table_sql = "CREATE TABLE #{sequencer.table_name} (id BIGINT unsigned NOT NULL DEFAULT 0) ENGINE=MyISAM"
           execute sequencer.connection_name.to_s, create_table_sql
         end
 
         def insert_initial_record_sequencer_database(args)
-          sequencer_name = sequencer_name_or_error "insert_initial_record", args
-          sequencer = sequencer_or_error sequencer_name
-
+          sequencer = sequencer_or_error "insert_initial_record", args
           insert_initial_record_sql = "INSERT INTO #{sequencer.table_name} VALUES (0)"
           execute sequencer.connection_name.to_s, insert_initial_record_sql
         end
@@ -208,26 +204,28 @@ Missing cluster_name. Find cluster_name via `rake active_record:sharding:info` t
         private
 
         def exec_task_for_sequencer_database(task_name, args)
-          sequencer_name = sequencer_name_or_error task_name, args
-          sequencer = sequencer_or_error sequencer_name
+          sequencer = sequencer_or_error task_name, args
           __send__ task_name, sequencer.connection_name.to_s
         end
 
-        def sequencer_name_or_error(name, args)
-          unless sequencer_name = args[:sequencer_name]
-            $stderr.puts <<-MSG
-Missing sequencer_name. Find sequencer_name via `rake active_record:sharding:info` then call `rake "active_record:sharding:sequencer#{name}[$sequencer_name]"`.
-          MSG
-            exit
-          end
-          sequencer_name
-        end
-
-        def sequencer_or_error(sequencer_name)
+        def sequencer_or_error(task_name, args)
+          sequencer_name = sequencer_name_or_error task_name, args
           fetch_sequencer_config sequencer_name.to_sym
         rescue KeyError
           $stderr.puts %(sequencer name "#{sequencer_name}" not found.)
           exit
+        end
+
+        def sequencer_name_or_error(task_name, args)
+          unless sequencer_name = args[:sequencer_name]
+            # rubocop:disable Metrics/LineLength
+            $stderr.puts <<-MSG
+Missing sequencer_name. Find sequencer_name via `rake active_record:sharding:info` then call `rake "active_record:sharding:sequencer#{task_name}[$sequencer_name]"`.
+          MSG
+            exit
+            # rubocop:enable Metrics/LineLength
+          end
+          sequencer_name
         end
       end
       extend TasksForSingleSequencerTask
