@@ -20,16 +20,16 @@ module ActiveRecord
         end
 
         def current_sequence_id
-          connection = sequencer_repository.fetch(sequencer_name).connection
-          connection.execute "UPDATE `#{sequencer_config.table_name}` SET id = LAST_INSERT_ID(id)"
-          res = connection.execute "SELECT LAST_INSERT_ID()"
-          new_id = res.first.first.to_i
-          new_id
+          execute_sql "id"
         end
 
         def next_sequence_id
+          execute_sql "id +1"
+        end
+
+        def execute_sql(last_insert_id_args)
           connection = sequencer_repository.fetch(sequencer_name).connection
-          connection.execute "UPDATE `#{sequencer_config.table_name}` SET id = LAST_INSERT_ID(id +1)"
+          connection.execute "UPDATE `#{sequencer_config.table_name}` SET id = LAST_INSERT_ID(#{last_insert_id_args})"
           res = connection.execute "SELECT LAST_INSERT_ID()"
           new_id = res.first.first.to_i
           new_id
