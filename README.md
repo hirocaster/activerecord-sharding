@@ -1,6 +1,6 @@
 # ActiveRecord::Sharding
 
-[![Build Status](https://travis-ci.org/hirocaster/activerecord-sharding.svg)](https://travis-ci.org/hirocaster/activerecord-sharding) [![Coverage Status](https://coveralls.io/repos/hirocaster/activerecord-sharding/badge.svg?branch=coveralls&service=github)](https://coveralls.io/github/hirocaster/activerecord-sharding?branch=coveralls) [![Code Climate](https://codeclimate.com/github/hirocaster/activerecord-sharding/badges/gpa.svg)](https://codeclimate.com/github/hirocaster/activerecord-sharding) [![Dependency Status](https://gemnasium.com/hirocaster/activerecord-sharding.svg)](https://gemnasium.com/hirocaster/activerecord-sharding)
+[![Build Status](https://travis-ci.org/hirocaster/activerecord-sharding.svg)](https://travis-ci.org/hirocaster/activerecord-sharding) [![Coverage Status](https://coveralls.io/repos/hirocaster/activerecord-sharding/badge.svg?branch=master&service=github)](https://coveralls.io/github/hirocaster/activerecord-sharding?branch=master) [![Code Climate](https://codeclimate.com/github/hirocaster/activerecord-sharding/badges/gpa.svg)](https://codeclimate.com/github/hirocaster/activerecord-sharding) [![Dependency Status](https://gemnasium.com/hirocaster/activerecord-sharding.svg)](https://gemnasium.com/hirocaster/activerecord-sharding)
 
 Simple Database Sharding in ActiveRecord.
 
