@@ -123,6 +123,16 @@ using `#put!` method.
 user = User.put! name: 'foobar'
 ```
 
+if transaction to shard database and nest other database transactions.
+
+```ruby
+User.put!(name: 'foobar') do |new_user| # transaction for user shard database
+  OTHER_MODEL.transaction do
+    OTHER_MODEL.create!(user_id: new_user.id)
+  end
+end
+```
+
 returns User new object.
 
 #### Select Query
