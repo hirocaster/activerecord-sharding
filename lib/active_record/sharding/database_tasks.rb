@@ -197,11 +197,28 @@ Missing cluster_name. Find cluster_name via `rake active_record:sharding:info` t
 
         def insert_initial_record_sequencer_database(args)
           sequencer = sequencer_or_error "insert_initial_record", args
-          insert_initial_record_sql = "INSERT INTO #{sequencer.table_name} VALUES (0)"
-          execute sequencer.connection_name.to_s, insert_initial_record_sql
+          records_count = sequencer_records_count sequencer
+
+          if records_count == 0
+            insert_initial_record_sql = "INSERT INTO #{sequencer.table_name} VALUES (0)"
+            execute sequencer.connection_name.to_s, insert_initial_record_sql
+          else
+            puts "Exist sequencer record in #{sequencer.table_name} table."
+          end
         end
 
         private
+
+        def sequencer_records_count(sequencer)
+          count_sql = "SELECT COUNT(*) FROM #{sequencer.table_name}"
+          count_result = execute sequencer.connection_name.to_s, count_sql
+
+          if count_result
+            count_result.first.first.to_i
+          else
+            0
+          end
+        end
 
         def exec_task_for_sequencer_database(task_name, args)
           sequencer = sequencer_or_error task_name, args
