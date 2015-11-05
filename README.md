@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
   use_sequencer :user
 
   before_put do |attributes|
-    attributes[:id] = count_up_sequence_id unless attributes[:id]
+    attributes[:id] = next_sequence_id unless attributes[:id]
   end
 end
 ```
