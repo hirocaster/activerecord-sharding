@@ -35,7 +35,14 @@ module ActiveRecord
           @before_put_callback.call(attributes) if @before_put_callback
 
           if key = attributes[sharding_key] || attributes[sharding_key.to_s]
-            shard_for(key).create!(attributes)
+            if block_given?
+              shard_for(key).transaction do
+                object = shard_for(key).create!(attributes)
+                yield(object)
+              end
+            else
+              shard_for(key).create!(attributes)
+            end
           else
             fail ActiveRecord::Sharding::MissingShardingKeyAttribute
           end

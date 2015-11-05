@@ -24,10 +24,6 @@ module ActiveRecord
         end
 
         def next_sequence_id
-          execute_sql("id").to_i + 1
-        end
-
-        def count_up_sequence_id
           execute_sql "id +1"
         end
 

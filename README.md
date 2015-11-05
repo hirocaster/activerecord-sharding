@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
   use_sequencer :user
 
   before_put do |attributes|
-    attributes[:id] = count_up_sequence_id unless attributes[:id]
+    attributes[:id] = next_sequence_id unless attributes[:id]
   end
 end
 ```
@@ -121,6 +121,16 @@ using `#put!` method.
 
 ```ruby
 user = User.put! name: 'foobar'
+```
+
+if transaction to shard database and nest other database transactions.
+
+```ruby
+User.put!(name: 'foobar') do |new_user| # transaction for user shard database
+  OTHER_MODEL.transaction do
+    OTHER_MODEL.create!(user_id: new_user.id)
+  end
+end
 ```
 
 returns User new object.
