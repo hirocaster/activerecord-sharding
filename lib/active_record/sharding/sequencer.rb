@@ -28,9 +28,10 @@ module ActiveRecord
         end
 
         def execute_sql(last_insert_id_args)
-          connection = sequencer_repository.fetch(sequencer_name).connection
-          connection.execute "UPDATE `#{sequencer_config.table_name}` SET id = LAST_INSERT_ID(#{last_insert_id_args})"
-          res = connection.execute "SELECT LAST_INSERT_ID()"
+          sequencer_klass = sequencer_repository.fetch(sequencer_name)
+          connection = sequencer_klass.connection
+          connection.execute "UPDATE `#{sequencer_config.table_name}` SET id = LAST_INSERT_ID(#{last_insert_id_args})", sequencer_klass.name
+          res = connection.execute "SELECT LAST_INSERT_ID()", sequencer_klass.name
           new_id = res.first.first.to_i
           new_id
         end
