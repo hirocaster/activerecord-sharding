@@ -16,6 +16,12 @@ describe ActiveRecord::Sharding::Model do
       expect(current_id).to be_a_kind_of Fixnum
       expect(model.current_sequence_id).to eq current_id
     end
+
+    it "output class name to log" do
+      sequencer_klass = model.sequencer_repository.fetch(:user)
+      expect(sequencer_klass.connection).to receive(:execute).with(anything, "User::SequencerForTestUserSequencer").and_return([[0]]).twice
+      model.current_sequence_id
+    end
   end
 
   describe '#next_sequence_id' do
