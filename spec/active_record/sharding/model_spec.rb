@@ -42,6 +42,21 @@ describe ActiveRecord::Sharding::Model do
       expect(alice.class.name).to match(/User::ShardFor/)
     end
 
+    context "in transaction" do
+      it "when rollback" do
+        before_record_count = model.all_shards.map(&:count).reduce(:+)
+
+        model.put!(name: "Bob") do |bob|
+          expect(bob.persisted?).to be true
+          raise ActiveRecord::Rollback
+        end
+
+        after_record_count = model.all_shards.map(&:count).reduce(:+)
+
+        expect(after_record_count).to eq before_record_count
+      end
+    end
+
     context 'next call #put!' do
       let(:bob) { model.put! name: "Bob" }
       let(:alice_connect_db) { alice.class.connection.pool.spec.config[:database] }
