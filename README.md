@@ -146,6 +146,12 @@ User.shard_for(sharding_key).where(name: 'foorbar')
 
 `#sahrd_for` is returns User class.
 
+for all shards query
+
+```ruby
+User.all_shards.flat_map { |model| model.find_by(name: 'foorbar') }.compact
+```
+
 #### Association/Relation
 
 if use database association/relation in sharding databases.
