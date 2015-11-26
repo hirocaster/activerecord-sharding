@@ -54,7 +54,7 @@ user_002:
   host: localhost
 
 user_003:
-<<: *default
+  <<: *default
   database: user_003
   host: localhost
 ```
