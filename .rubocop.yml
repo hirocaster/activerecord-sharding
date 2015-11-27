@@ -41,6 +41,9 @@ Metrics/LineLength:
 Lint/AssignmentInCondition:
   Enabled: false
 
+Lint/BlockAlignment:
+  Enabled: false
+
 Metrics/MethodLength:
   Max: 12
 
