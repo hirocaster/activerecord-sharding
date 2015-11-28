@@ -14,9 +14,9 @@ module ActiveRecord
 
       private
 
-      def generate_class_name(connection_name)
-        "SequencerFor#{connection_name.to_s.tr('-', '_').classify}"
-      end
+        def generate_class_name(connection_name)
+          "SequencerFor#{connection_name.to_s.tr('-', '_').classify}"
+        end
     end
   end
 end

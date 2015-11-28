@@ -118,30 +118,30 @@ module ActiveRecord
 
         private
 
-        def exec_task_for_all_databases(task_name, args)
-          cluster_name = cluster_name_or_error task_name, args
-          cluster = cluster_or_error cluster_name
-          cluster.connections.each do |connection_name|
-            __send__ task_name, connection_name.to_s
+          def exec_task_for_all_databases(task_name, args)
+            cluster_name = cluster_name_or_error task_name, args
+            cluster = cluster_or_error cluster_name
+            cluster.connections.each do |connection_name|
+              __send__ task_name, connection_name.to_s
+            end
           end
-        end
 
-        def cluster_name_or_error(name, args)
-          unless cluster_name = args[:cluster_name]
-            $stderr.puts <<-MSG
+          def cluster_name_or_error(name, args)
+            unless cluster_name = args[:cluster_name]
+              $stderr.puts <<-MSG
 Missing cluster_name. Find cluster_name via `rake active_record:sharding:info` then call `rake "active_record:sharding:#{name}[$cluster_name]"`.
           MSG
+              exit
+            end
+            cluster_name
+          end
+
+          def cluster_or_error(cluster_name)
+            fetch_cluster_config cluster_name.to_sym
+          rescue KeyError
+            $stderr.puts %(cluster name "#{cluster_name}" not found.)
             exit
           end
-          cluster_name
-        end
-
-        def cluster_or_error(cluster_name)
-          fetch_cluster_config cluster_name.to_sym
-        rescue KeyError
-          $stderr.puts %(cluster name "#{cluster_name}" not found.)
-          exit
-        end
       end
       extend TaskOrganizerForSingleClusterTask
 
@@ -174,7 +174,7 @@ Missing cluster_name. Find cluster_name via `rake active_record:sharding:info` t
             ActiveRecord::Base.establish_connection configuration
             ActiveRecord::Tasks::DatabaseTasks.load_schema :ruby
           else
-            fail "This version of ActiveRecord is not supported: v#{ActiveRecord::VERSION::STRING}"
+            raise "This version of ActiveRecord is not supported: v#{ActiveRecord::VERSION::STRING}"
           end
         end
       end
@@ -209,41 +209,41 @@ Missing cluster_name. Find cluster_name via `rake active_record:sharding:info` t
 
         private
 
-        def sequencer_records_count(sequencer)
-          count_sql = "SELECT COUNT(*) FROM #{sequencer.table_name}"
-          count_result = execute sequencer.connection_name.to_s, count_sql
+          def sequencer_records_count(sequencer)
+            count_sql = "SELECT COUNT(*) FROM #{sequencer.table_name}"
+            count_result = execute sequencer.connection_name.to_s, count_sql
 
-          if count_result
-            count_result.first.first.to_i
-          else
-            0
+            if count_result
+              count_result.first.first.to_i
+            else
+              0
+            end
           end
-        end
 
-        def exec_task_for_sequencer_database(task_name, args)
-          sequencer = sequencer_or_error task_name, args
-          __send__ task_name, sequencer.connection_name.to_s
-        end
+          def exec_task_for_sequencer_database(task_name, args)
+            sequencer = sequencer_or_error task_name, args
+            __send__ task_name, sequencer.connection_name.to_s
+          end
 
-        def sequencer_or_error(task_name, args)
-          sequencer_name = sequencer_name_or_error task_name, args
-          fetch_sequencer_config sequencer_name.to_sym
-        rescue KeyError
-          $stderr.puts %(sequencer name "#{sequencer_name}" not found.)
-          exit
-        end
+          def sequencer_or_error(task_name, args)
+            sequencer_name = sequencer_name_or_error task_name, args
+            fetch_sequencer_config sequencer_name.to_sym
+          rescue KeyError
+            $stderr.puts %(sequencer name "#{sequencer_name}" not found.)
+            exit
+          end
 
-        def sequencer_name_or_error(task_name, args)
-          unless sequencer_name = args[:sequencer_name]
-            # rubocop:disable Metrics/LineLength
-            $stderr.puts <<-MSG
+          def sequencer_name_or_error(task_name, args)
+            unless sequencer_name = args[:sequencer_name]
+              # rubocop:disable Metrics/LineLength
+              $stderr.puts <<-MSG
 Missing sequencer_name. Find sequencer_name via `rake active_record:sharding:info` then call `rake "active_record:sharding:sequencer#{task_name}[$sequencer_name]"`.
           MSG
-            exit
-            # rubocop:enable Metrics/LineLength
+              exit
+              # rubocop:enable Metrics/LineLength
+            end
+            sequencer_name
           end
-          sequencer_name
-        end
       end
       extend TasksForSingleSequencerTask
     end # module DatabaseTasks

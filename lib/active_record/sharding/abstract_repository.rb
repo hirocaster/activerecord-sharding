@@ -22,7 +22,7 @@ module ActiveRecord
         end
 
         def generate_class_name(connection_name) # rubocop:disable Lint/UnusedMethodArgument
-          fail NotImplementedError, "#{self.class.name}.#{__method__} is an abstract method."
+          raise NotImplementedError, "#{self.class.name}.#{__method__} is an abstract method."
         end
     end
   end
