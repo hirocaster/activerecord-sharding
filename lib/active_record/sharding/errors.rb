@@ -5,5 +5,8 @@ module ActiveRecord
 
     class MissingShardingKeyAttribute < Error
     end
+
+    class MissingPrimaryKey < Error
+    end
   end
 end
