@@ -102,4 +102,42 @@ describe ActiveRecord::Sharding::Model do
       expect(record.name).to eq("foo")
     end
   end
+
+  describe "Irregular use case" do
+    context "Not write before_put block" do
+      let!(:model) do
+        Class.new(ActiveRecord::Base) do
+          def self.name
+            "User"
+          end
+
+          def self.sequence_id
+            @sequence_id ||= 0
+          end
+
+          class << self
+            attr_writer :sequence_id
+          end
+
+          def self.next_sequence_id
+            self.sequence_id += 1
+          end
+
+          include ActiveRecord::Sharding::Model
+          use_sharding :user, :modulo
+          define_sharding_key :id
+
+          define_parent_methods do
+            def find_from_all_by_name(name)
+              all_shards.map { |m| m.find_by(name: name) }.compact.first
+            end
+          end
+        end
+      end
+
+      it "Raise MissingPrimaryKey at #save" do
+        expect { model.shard_for(1).new.save }.to raise_error ActiveRecord::Sharding::MissingPrimaryKey
+      end
+    end
+  end
 end

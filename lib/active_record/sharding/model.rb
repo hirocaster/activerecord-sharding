@@ -5,7 +5,9 @@ module ActiveRecord
     module Model
       extend ActiveSupport::Concern
 
-      included do
+      included do |base|
+        base.before_create :validate_id!
+
         class_attribute :cluster_router, instance_writer: false
         class_attribute :shard_repository, instance_writer: false
         class_attribute :sharding_key, instance_writer: false
@@ -61,6 +63,12 @@ module ActiveRecord
           instance_eval(&block)
         end
       end
+
+      private
+
+        def validate_id!
+          raise ActiveRecord::Sharding::MissingPrimaryKey if attributes[self.class.primary_key].nil?
+        end
     end
   end
 end
