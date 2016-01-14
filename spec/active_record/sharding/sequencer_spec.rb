@@ -34,5 +34,13 @@ describe ActiveRecord::Sharding::Model do
     it "next sequence id > current sequence id" do
       expect(model.current_sequence_id).to be < model.next_sequence_id
     end
+    context "when offset is selected" do
+      let(:offset) { 10 }
+      it "returns current_sequence_id with offset" do
+        next_id = model.current_sequence_id + offset
+        expect(next_id).to eq model.next_sequence_id(offset)
+        expect(next_id).to eq model.current_sequence_id
+      end
+    end
   end
 end

@@ -23,8 +23,8 @@ module ActiveRecord
           execute_sql "id"
         end
 
-        def next_sequence_id
-          execute_sql "id +1"
+        def next_sequence_id(offset = 1)
+          execute_sql "id +#{offset}"
         end
 
         def execute_sql(last_insert_id_args)
