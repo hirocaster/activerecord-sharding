@@ -3,6 +3,13 @@ require "active_support/concern"
 module ActiveRecord
   module Sharding
     module Sequencer
+
+      class Error < ActiveRecord::Sharding::Error
+      end
+
+      class NegativeNumberOffsetError < Error
+      end
+
       extend ActiveSupport::Concern
 
       included do
@@ -24,6 +31,7 @@ module ActiveRecord
         end
 
         def next_sequence_id(offset = 1)
+          raise NegativeNumberOffsetError if offset < 1
           execute_sql "id +#{offset}"
         end
 
