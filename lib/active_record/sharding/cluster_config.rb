@@ -16,12 +16,12 @@ module ActiveRecord
         @connection_registry[modulo_key]
       end
 
-      def registerd_connection_count
+      def registered_connection_count
         @connection_registry.count
       end
 
       def validate_config!
-        raise "Nothing registerd connections." if registerd_connection_count == 0
+        raise "Nothing registered connections." if registered_connection_count == 0
       end
 
       def connections

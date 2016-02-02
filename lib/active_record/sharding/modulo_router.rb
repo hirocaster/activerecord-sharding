@@ -6,7 +6,7 @@ module ActiveRecord
       end
 
       def route(id)
-        modulo_key = id % @cluster_config.registerd_connection_count
+        modulo_key = id % @cluster_config.registered_connection_count
         @cluster_config.fetch modulo_key
       end
     end
