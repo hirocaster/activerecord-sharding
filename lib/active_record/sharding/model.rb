@@ -59,6 +59,11 @@ module ActiveRecord
           shard_repository.all
         end
 
+        def all_shards_in_parallel
+          AllShardsInParallel.new(all_shards)
+        end
+        alias_method :parallel, :all_shards_in_parallel
+
         def define_parent_methods(&block)
           instance_eval(&block)
         end

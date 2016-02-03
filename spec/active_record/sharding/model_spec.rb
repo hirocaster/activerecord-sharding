@@ -90,6 +90,12 @@ describe ActiveRecord::Sharding::Model do
     end
   end
 
+  describe ".all_shards_in_parallel" do
+    it "returns a ActiveRecord::Sharding::AllShardsInParallel" do
+      expect(User.all_shards_in_parallel).to be_a ActiveRecord::Sharding::AllShardsInParallel
+    end
+  end
+
   describe ".define_parent_methods" do
     before do
       model.put! name: "foo"

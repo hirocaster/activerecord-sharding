@@ -152,6 +152,12 @@ for all shards query
 User.all_shards.flat_map { |model| model.find_by(name: 'foorbar') }.compact
 ```
 
+for all shards query in parallel
+
+```ruby
+User.parallel.flat_map { |model| model.find_by(name: 'foorbar') }.compact
+```
+
 #### Association/Relation
 
 if use database association/relation in sharding databases.
