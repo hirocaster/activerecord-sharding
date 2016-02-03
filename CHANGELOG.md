@@ -1,5 +1,29 @@
 # Change Log
 
+## [v0.3.0](https://github.com/hirocaster/activerecord-sharding/tree/v0.3.0) (2016-02-03)
+[Full Changelog](https://github.com/hirocaster/activerecord-sharding/compare/v0.2.0...v0.3.0)
+
+**Merged pull requests:**
+
+- Add parallel query to all shards [\#20](https://github.com/hirocaster/activerecord-sharding/pull/20) ([hirocaster](https://github.com/hirocaster))
+
+## [v0.2.0](https://github.com/hirocaster/activerecord-sharding/tree/v0.2.0) (2016-01-15)
+[Full Changelog](https://github.com/hirocaster/activerecord-sharding/compare/v0.1.0...v0.2.0)
+
+**Merged pull requests:**
+
+- Add offset error [\#19](https://github.com/hirocaster/activerecord-sharding/pull/19) ([hirocaster](https://github.com/hirocaster))
+- add default args 'offset' at next\_sequence\_id method [\#18](https://github.com/hirocaster/activerecord-sharding/pull/18) ([myoan](https://github.com/myoan))
+- Version up ruby 2.2.4 [\#17](https://github.com/hirocaster/activerecord-sharding/pull/17) ([hirocaster](https://github.com/hirocaster))
+- Add MissingPrimaryKey Error [\#16](https://github.com/hirocaster/activerecord-sharding/pull/16) ([hirocaster](https://github.com/hirocaster))
+- Out put sequencer class name to log [\#15](https://github.com/hirocaster/activerecord-sharding/pull/15) ([hirocaster](https://github.com/hirocaster))
+- Add transaction spec [\#14](https://github.com/hirocaster/activerecord-sharding/pull/14) ([hirocaster](https://github.com/hirocaster))
+- Put transaction block [\#13](https://github.com/hirocaster/activerecord-sharding/pull/13) ([hirocaster](https://github.com/hirocaster))
+- Add count\_up\_sequence\_id method [\#12](https://github.com/hirocaster/activerecord-sharding/pull/12) ([hirocaster](https://github.com/hirocaster))
+- Fix duplicate sequencer record [\#11](https://github.com/hirocaster/activerecord-sharding/pull/11) ([hirocaster](https://github.com/hirocaster))
+- Add multi activerecord version tests [\#9](https://github.com/hirocaster/activerecord-sharding/pull/9) ([hirocaster](https://github.com/hirocaster))
+- Fix coveraills badge [\#8](https://github.com/hirocaster/activerecord-sharding/pull/8) ([hirocaster](https://github.com/hirocaster))
+
 ## [v0.1.0](https://github.com/hirocaster/activerecord-sharding/tree/v0.1.0) (2015-08-27)
 **Merged pull requests:**
 
