@@ -8,7 +8,14 @@ gemfile:
   - Gemfile
   - ar41.gemfile
   - ar416.gemfile
+  - ar50.gemfile
 services:
   - mysql
 script:
   - bundle exec rake spec
+matrix:
+  exclude:
+    - rvm: 2.1.8
+      gemfile: ar50.gemfile
+    - rvm: 2.0.0-p648
+      gemfile: ar50.gemfile

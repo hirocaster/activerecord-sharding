@@ -1,0 +1,6 @@
+source "https://rubygems.org"
+
+gem "activerecord", ">= 5.0.0.beta3"
+
+# Specify your gem's dependencies in active_record_sharding.gemspec
+gemspec
