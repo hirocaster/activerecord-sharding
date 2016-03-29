@@ -16,9 +16,9 @@ describe ActiveRecord::Sharding::ClusterConfig do
       config.register_connection :db_connection_003
     end
 
-    describe '#registerd_connection_count' do
-      it "returns registerd total connection count" do
-        expect(config.registerd_connection_count).to eq 3
+    describe '#registered_connection_count' do
+      it "returns registered total connection count" do
+        expect(config.registered_connection_count).to eq 3
       end
     end
 
@@ -34,7 +34,7 @@ describe ActiveRecord::Sharding::ClusterConfig do
   describe '#validate_config!' do
     context "Nothing register connection" do
       it "returns raise" do
-        expect { config.validate_config! }.to raise_error "Nothing registerd connections."
+        expect { config.validate_config! }.to raise_error "Nothing registered connections."
       end
     end
   end
