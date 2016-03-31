@@ -73,6 +73,7 @@ module ActiveRecord
 
         def validate_id!
           raise ActiveRecord::Sharding::MissingPrimaryKey if attributes[self.class.primary_key].nil?
+          raise ActiveRecord::Sharding::InvalidPrimaryKey if attributes[self.class.primary_key].zero?
         end
     end
   end

@@ -11,5 +11,8 @@ module ActiveRecord
 
     class InvalidSequenceId < Error
     end
+
+    class InvalidPrimaryKey < Error
+    end
   end
 end
