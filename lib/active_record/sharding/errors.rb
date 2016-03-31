@@ -8,5 +8,11 @@ module ActiveRecord
 
     class MissingPrimaryKey < Error
     end
+
+    class InvalidSequenceId < Error
+    end
+
+    class InvalidPrimaryKey < Error
+    end
   end
 end

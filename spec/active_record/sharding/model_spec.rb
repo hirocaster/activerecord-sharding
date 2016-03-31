@@ -42,6 +42,10 @@ describe ActiveRecord::Sharding::Model do
       expect(alice.class.name).to match(/User::ShardFor/)
     end
 
+    it "raise InvalidPrimaryKey" do
+      expect { model.put! id: 0, name: "invalid_id" }.to raise_error ActiveRecord::Sharding::InvalidPrimaryKey
+    end
+
     context "in transaction" do
       it "when rollback" do
         before_record_count = model.all_shards.map(&:count).reduce(:+)
