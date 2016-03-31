@@ -10,6 +10,26 @@ describe ActiveRecord::Sharding::Model do
     end
   end
 
+  let(:sequencer_args) do
+    { sequencer_name: "user" }
+  end
+
+  context "forget insert sequencer record" do
+    before do
+      ActiveRecord::Sharding::DatabaseTasks.drop_sequencer_database sequencer_args
+      ActiveRecord::Sharding::DatabaseTasks.create_sequencer_database sequencer_args
+      ActiveRecord::Sharding::DatabaseTasks.create_table_sequencer_database sequencer_args
+    end
+
+    after do
+      ActiveRecord::Sharding::DatabaseTasks.insert_initial_record_sequencer_database sequencer_args # forget this in setup
+    end
+
+    it "raise ActiveRecord::Sharding::InvalidSequenceId" do
+      expect { model.next_sequence_id }.to raise_error ActiveRecord::Sharding::InvalidSequenceId
+    end
+  end
+
   describe '#current_sequence_id' do
     it "returns current sequence id" do
       current_id = model.current_sequence_id

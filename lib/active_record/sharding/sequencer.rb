@@ -32,7 +32,9 @@ module ActiveRecord
 
         def next_sequence_id(offset = 1)
           raise NegativeNumberOffsetError if offset < 1
-          execute_sql "id +#{offset}"
+          sequence_id = execute_sql "id +#{offset}"
+          raise ActiveRecord::Sharding::InvalidSequenceId if sequence_id.zero?
+          sequence_id
         end
 
         def execute_sql(last_insert_id_args)
