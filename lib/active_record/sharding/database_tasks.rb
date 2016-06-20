@@ -200,9 +200,9 @@ Missing cluster_name. Find cluster_name via `rake active_record:sharding:info` t
           records_count = sequencer_records_count sequencer
 
           if records_count == 0
-            puts "Insert initial sequencer record into #{sequencer.table_name} table."
             insert_initial_record_sql = "INSERT INTO #{sequencer.table_name} VALUES (0)"
             execute sequencer.connection_name.to_s, insert_initial_record_sql
+            puts "Insert initial sequencer record into #{sequencer.table_name} table."
           else
             puts "Exist sequencer record in #{sequencer.table_name} table."
           end
