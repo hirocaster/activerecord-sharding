@@ -144,7 +144,7 @@ User.shard_for(sharding_key).where(name: 'foorbar')
 
 `sharding_key` is your define_syarding_key.(example is User Object id)
 
-`#sahrd_for` is returns User class.
+`#shard_for` is returns User class.
 
 for all shards query
 
@@ -168,7 +168,7 @@ Please, manually add association/relation methods.
 
 Bad sample
 
-```
+```ruby
 class User < ActiveRecord::Base
   has_many :items # connect to not sharding databases(default database)
 
@@ -181,7 +181,7 @@ end
 
 Manually add method
 
-```
+```ruby
 class User < ActiveRecord::Base
   def items
     return [] unless id
