@@ -144,7 +144,7 @@ User.shard_for(sharding_key).where(name: 'foorbar')
 
 `sharding_key` is your define_syarding_key.(example is User Object id)
 
-`#sahrd_for` is returns User class.
+`#shard_for` is returns User class.
 
 for all shards query
 
