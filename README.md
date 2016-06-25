@@ -168,7 +168,7 @@ Please, manually add association/relation methods.
 
 Bad sample
 
-```
+```ruby
 class User < ActiveRecord::Base
   has_many :items # connect to not sharding databases(default database)
 
@@ -181,7 +181,7 @@ end
 
 Manually add method
 
-```
+```ruby
 class User < ActiveRecord::Base
   def items
     return [] unless id
