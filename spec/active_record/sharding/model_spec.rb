@@ -150,4 +150,19 @@ describe ActiveRecord::Sharding::Model do
       end
     end
   end
+
+  describe "Marshaling" do
+    let(:charlie) { User.put!(name: "Charlie") }
+    describe Marshal, ".dump" do
+      it "dumps successfully." do
+        expect { Marshal.dump(charlie) }.to_not raise_error
+      end
+    end
+
+    describe Marshal, ".load" do
+      it "loads successfully" do
+        expect(Marshal.load(Marshal.dump(charlie))).to eq charlie
+      end
+    end
+  end
 end
