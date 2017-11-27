@@ -8,12 +8,12 @@ module ActiveRecord
       include Model
       include Sequencer
 
-      included do |base|
-        base.before_put do |attributes|
+      included do
+        before_put do |attributes|
           attributes[:id] ||= next_sequence_id
         end
 
-        base.before_save on: :create do
+        before_save on: :create do
           self.id ||= self.class.next_sequence_id
         end
       end
