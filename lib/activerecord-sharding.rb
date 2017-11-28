@@ -13,6 +13,7 @@ require "active_record/sharding/model"
 require "active_record/sharding/sequencer"
 require "active_record/sharding/sequencer_repository"
 require "active_record/sharding/sequencer_config"
+require "active_record/sharding/facade"
 
 module ActiveRecord
   module Sharding
