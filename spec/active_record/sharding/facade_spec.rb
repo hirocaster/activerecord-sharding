@@ -25,7 +25,7 @@ describe ActiveRecord::Sharding::Facade do
       expect(alice.persisted?).to be true
       expect(alice.id).to eq model.current_sequence_id
       expect(alice.name).to eq "Alice"
-      expect(alice.class.name).to match /User::ShardFor/
+      expect(alice.class.name).to match(/User::ShardFor/)
     end
   end
 
