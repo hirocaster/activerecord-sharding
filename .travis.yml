@@ -9,7 +9,10 @@ gemfile:
   - Gemfile
   - ar41.gemfile
   - ar416.gemfile
+  - ar42.gemfile
   - ar50.gemfile
+  - ar51.gemfile
+  - ar52.gemfile
 services:
   - mysql
 script:
