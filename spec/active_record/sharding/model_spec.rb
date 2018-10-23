@@ -41,7 +41,11 @@ describe ActiveRecord::Sharding::Model do
     let(:connection_names) { ["primary", "ShardForTestUser001", "ShardForTestUser002", "ShardForTestUser003", "SequencerForTestUserSequencer"] }
 
     it "Create 1 connection for each DB" do
-      expect(ActiveRecord::Base.connection_handler.connection_pool_list.map{|c| c.spec.name }).to match_array(connection_names)
+      if ActiveRecord.version >= Gem::Version.new("5.0")
+        expect(ActiveRecord::Base.connection_handler.connection_pool_list.map { |c| c.spec.name }).to match_array(connection_names)
+      else
+        skip("This test is for AR5. ")
+      end
     end
   end
 
