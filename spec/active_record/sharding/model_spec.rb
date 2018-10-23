@@ -1,4 +1,6 @@
 describe ActiveRecord::Sharding::Model do
+  before(:all) { ActiveRecord::Base.clear_all_connections! }
+
   let!(:model) do
     Class.new(ActiveRecord::Base) do
       def self.name
@@ -34,6 +36,18 @@ describe ActiveRecord::Sharding::Model do
   end
 
   let(:alice) { model.put! name: "Alice" }
+
+  context "ActiveRecord::ConnectionAdapters::ConnectionPool" do
+    let(:connection_names) { ["primary", "ShardForTestUser001", "ShardForTestUser002", "ShardForTestUser003", "SequencerForTestUserSequencer"] }
+
+    it "Create 1 connection for each DB" do
+      if ActiveRecord.version >= Gem::Version.new("5.0")
+        expect(ActiveRecord::Base.connection_handler.connection_pool_list.map { |c| c.spec.name }).to match_array(connection_names)
+      else
+        skip("This test is for AR5. ")
+      end
+    end
+  end
 
   describe ".put!" do
     it "example" do

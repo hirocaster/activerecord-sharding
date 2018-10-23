@@ -16,6 +16,7 @@ describe ActiveRecord::Sharding::Model do
 
   context "forget insert sequencer record" do
     before do
+      ActiveRecord::Base.clear_all_connections!
       ActiveRecord::Sharding::DatabaseTasks.drop_sequencer_database sequencer_args
       ActiveRecord::Sharding::DatabaseTasks.create_sequencer_database sequencer_args
       ActiveRecord::Sharding::DatabaseTasks.create_table_sequencer_database sequencer_args

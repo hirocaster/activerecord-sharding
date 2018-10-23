@@ -9,7 +9,10 @@ gemfile:
   - Gemfile
   - ar41.gemfile
   - ar416.gemfile
+  - ar42.gemfile
   - ar50.gemfile
+  - ar51.gemfile
+  - ar52.gemfile
 services:
   - mysql
 script:
@@ -18,5 +21,13 @@ matrix:
   exclude:
     - rvm: 2.1.8
       gemfile: ar50.gemfile
+    - rvm: 2.1.8
+      gemfile: ar51.gemfile
+    - rvm: 2.1.8
+      gemfile: ar52.gemfile
     - rvm: 2.0.0-p648
       gemfile: ar50.gemfile
+    - rvm: 2.0.0-p648
+      gemfile: ar51.gemfile
+    - rvm: 2.0.0-p648
+      gemfile: ar52.gemfile
