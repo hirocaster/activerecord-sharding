@@ -14,6 +14,8 @@ end
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "activerecord-sharding"
+puts "======= ActiveRecord::VERSION::STRING #{ActiveRecord::VERSION::STRING} ============"
+
 require "pry"
 require "pry-byebug"
 require "awesome_print"
