@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "activerecord"
-gem "mysql2", ">= 0.4.4", "< 0.6.0"
+gem "activerecord", ">= 4.2.0", "< 5.0.0"
+gem "mysql2", "~> 0.3.18"
 # Specify your gem's dependencies in active_record_sharding.gemspec
 gemspec
